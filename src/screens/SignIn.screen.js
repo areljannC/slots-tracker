@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { View, StyleSheet, Alert } from 'react-native'
 import { Input, Button } from 'react-native-elements'
 
-const SignIn = () => {
+const SignInScreen = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
@@ -64,4 +64,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default SignIn
+export default SignInScreen

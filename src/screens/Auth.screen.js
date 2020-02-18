@@ -2,7 +2,7 @@ import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import { Button } from 'react-native-elements'
 
-const Auth = ({ navigation }) => {
+const AuthScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.authButtonsContainer}>
@@ -41,4 +41,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default Auth
+export default AuthScreen

@@ -1,4 +1,4 @@
-export { default as Home } from './Home'
-export { default as Auth } from './Auth'
-export { default as SignIn } from './SignIn'
-export { default as SignUp } from './SignUp'
+export { default as HomeScreen } from './Home.screen'
+export { default as AuthScreen } from './Auth.screen'
+export { default as SignInScreen } from './SignIn.screen'
+export { default as SignUpScreen } from './SignUp.screen'

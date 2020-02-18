@@ -2,10 +2,10 @@ import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import { Text } from 'react-native-elements'
 
-const Home = () => {
+const SignUpScreen = () => {
   return (
     <View style={styles.container}>
-      <Text>Home view</Text>
+      <Text>Sign In</Text>
     </View>
   )
 }
@@ -20,4 +20,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default Home
+export default SignUpScreen
