@@ -33,7 +33,7 @@ export const userSignInSuccess = user => ({
 })
 
 export const userSignUpSuccess = user => ({
-  type: USER_SIGN_Up_SUCCESS,
+  type: USER_SIGN_UP_SUCCESS,
   payload: { user },
 })
 
@@ -41,17 +41,19 @@ export const userSignOutSuccess = () => ({
   type: USER_SIGN_OUT_SUCCESS,
 })
 
-export const userSignIn = async (email, password) => dispatch => {
+export const userSignIn = (email, password) => async dispatch => {
   dispatch(userSignInStart())
-  dispatch(userSignInFinish())
+  console.log('signin')
+  dispatch(userSignInSuccess())
 }
 
-export const userSignUp = async user => dispatch => {
+export const userSignUp = user => async dispatch => {
   dispatch(userSignUpStart())
-  dispatch(userSignUpFinish())
+  console.log('signup')
+  dispatch(userSignUpSuccess())
 }
 
-export const userSignOut = async () => dispatch => {
+export const userSignOut = () => async dispatch => {
   dispatch(userSignOutStart())
-  dispatch(userSignOutFinish())
+  dispatch(userSignOutSuccess())
 }

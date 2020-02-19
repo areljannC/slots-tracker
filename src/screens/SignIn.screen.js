@@ -1,15 +1,17 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux'
+import { userSignIn } from '../redux/actions'
 import { View, StyleSheet } from 'react-native'
 import { Input, Button } from 'react-native-elements'
 import { Grid, Row } from 'react-native-easy-grid'
 
-const SignInScreen = ({ navigation }) => {
+const mapDispatchToProps = dispatch => ({
+  userSignIn: () => dispatch(userSignIn())
+})
+
+const SignInScreen = ({ navigation, userSignIn }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-
-  const onSignIn = () => {
-    navigation.navigate('Main', { screen: 'Home' })
-  }
 
   return (
     <View style={styles.container}>
@@ -33,7 +35,7 @@ const SignInScreen = ({ navigation }) => {
             <Button
               title='Sign In'
               buttonStyle={styles.button}
-              onPress={onSignIn}
+              onPress={userSignIn}
             />
           </View>
         </Row>
@@ -67,4 +69,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default SignInScreen
+export default connect(null, mapDispatchToProps)(SignInScreen)

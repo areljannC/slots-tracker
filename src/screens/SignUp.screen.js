@@ -1,9 +1,15 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux'
+import { userSignUp } from '../redux/actions'
 import { View, StyleSheet } from 'react-native'
 import { Input, Button } from 'react-native-elements'
 import { Grid, Row } from 'react-native-easy-grid'
 
-const SignUpScreen = ({ navigation }) => {
+const mapDispatchToProps = dispatch => ({
+  userSignUp: () => dispatch(userSignUp())
+})
+
+const SignUpScreen = ({ navigation, userSignUp }) => {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
@@ -41,7 +47,7 @@ const SignUpScreen = ({ navigation }) => {
             <Button
               title='Sign Up'
               buttonStyle={styles.button}
-              onPress={() => {}}
+              onPress={userSignUp}
             />
           </View>
         </Row>
@@ -75,4 +81,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default SignUpScreen
+export default connect(null, mapDispatchToProps)(SignUpScreen)
