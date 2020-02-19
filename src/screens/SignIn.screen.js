@@ -1,39 +1,43 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, Alert } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import { Input, Button } from 'react-native-elements'
+import { Grid, Row } from 'react-native-easy-grid'
 
-const SignInScreen = () => {
+const SignInScreen = ({ navigation }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
   const onSignIn = () => {
-    Alert.alert(
-      'Sign In',
-      `${email} ${password}`,
-      [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
-      { cancelable: false }
-    )
+    navigation.navigate('Main', { screen: 'Home' })
   }
 
   return (
     <View style={styles.container}>
-      <View style={styles.inputFieldsContainer}>
-        <Input
-          placeholder='Email'
-          value={email}
-          onChangeText={text => setEmail(text)}
-        />
-        <Input
-          placeholder='Password'
-          value={password}
-          onChangeText={password => setPassword(password)}
-        />
-        <Button
-          title='Sign In'
-          buttonStyle={styles.button}
-          onPress={onSignIn}
-        />
-      </View>
+      <Grid>
+        <Row size={70}>
+          <View style={styles.inputFieldsContainer}>
+            <Input
+              placeholder='Email'
+              value={email}
+              onChangeText={text => setEmail(text)}
+            />
+            <Input
+              placeholder='Password'
+              value={password}
+              onChangeText={password => setPassword(password)}
+            />
+          </View>
+        </Row>
+        <Row size={30}>
+          <View style={styles.authButtonContainer}>
+            <Button
+              title='Sign In'
+              buttonStyle={styles.button}
+              onPress={onSignIn}
+            />
+          </View>
+        </Row>
+      </Grid>
     </View>
   )
 }
@@ -46,7 +50,6 @@ const styles = StyleSheet.create({
     width: 300,
     marginLeft: 'auto',
     marginRight: 'auto',
-    flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
