@@ -43,13 +43,13 @@ export const userSignOutSuccess = () => ({
 
 export const userSignIn = (email, password) => async dispatch => {
   dispatch(userSignInStart())
-  console.log('signin')
+  console.log(email, password)
   dispatch(userSignInSuccess())
 }
 
-export const userSignUp = user => async dispatch => {
+export const userSignUp = (firstName, lastName, email, password) => async dispatch => {
   dispatch(userSignUpStart())
-  console.log('signup')
+  console.log(firstName, lastName, email, password)
   dispatch(userSignUpSuccess())
 }
 

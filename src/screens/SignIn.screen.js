@@ -1,17 +1,22 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { userSignIn } from '../redux/actions'
+import { useForm } from 'react-hook-form'
 import { View, StyleSheet } from 'react-native'
-import { Input, Button } from 'react-native-elements'
+import { Text, Input, Button } from 'react-native-elements'
 import { Grid, Row } from 'react-native-easy-grid'
 
 const mapDispatchToProps = dispatch => ({
-  userSignIn: () => dispatch(userSignIn())
+  userSignIn: (email, password) => dispatch(userSignIn(email, password)),
 })
 
 const SignInScreen = ({ navigation, userSignIn }) => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const { register, setValue, handleSubmit, errors } = useForm()
+
+  const onSubmit = data => {
+    const { email, password } = data
+    userSignIn(email, password)
+  }
 
   return (
     <View style={styles.container}>
@@ -19,15 +24,19 @@ const SignInScreen = ({ navigation, userSignIn }) => {
         <Row size={70}>
           <View style={styles.inputFieldsContainer}>
             <Input
+              ref={register({ name: 'email' }, { required: true })}
+              onChangeText={text => setValue('email', text, true)}
               placeholder='Email'
-              value={email}
-              onChangeText={text => setEmail(text)}
+              keyboardType='email-address'
             />
+            {errors.email && <Text>Email is required.</Text>}
             <Input
+              ref={register({ name: 'password' }, { required: true })}
+              onChangeText={text => setValue('password', text, true)}
               placeholder='Password'
-              value={password}
-              onChangeText={password => setPassword(password)}
+              keyboardType='default'
             />
+            {errors.password && <Text>Password is required.</Text>}
           </View>
         </Row>
         <Row size={30}>
@@ -35,7 +44,7 @@ const SignInScreen = ({ navigation, userSignIn }) => {
             <Button
               title='Sign In'
               buttonStyle={styles.button}
-              onPress={userSignIn}
+              onPress={handleSubmit(onSubmit)}
             />
           </View>
         </Row>

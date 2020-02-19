@@ -1,19 +1,23 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { userSignUp } from '../redux/actions'
+import { useForm } from 'react-hook-form'
 import { View, StyleSheet } from 'react-native'
-import { Input, Button } from 'react-native-elements'
+import { Input, Button, Text } from 'react-native-elements'
 import { Grid, Row } from 'react-native-easy-grid'
 
 const mapDispatchToProps = dispatch => ({
-  userSignUp: () => dispatch(userSignUp())
+  userSignUp: (firstName, lastName, email, password) =>
+    dispatch(userSignUp(firstName, lastName, email, password)),
 })
 
 const SignUpScreen = ({ navigation, userSignUp }) => {
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const { register, setValue, handleSubmit, errors, watch } = useForm()
+
+  const onSubmit = data => {
+    const { firstName, lastName, email, password } = data
+    userSignUp(firstName, lastName, email, password)
+  }
 
   return (
     <View style={styles.container}>
@@ -21,25 +25,52 @@ const SignUpScreen = ({ navigation, userSignUp }) => {
         <Row size={70}>
           <View style={styles.inputFieldsContainer}>
             <Input
+              ref={register({ name: 'firstName' }, { required: true })}
+              onChangeText={text => setValue('firstName', text, true)}
               placeholder='First Name'
-              value={firstName}
-              onChangeText={text => setFirstName(text)}
+              keyboardType='default'
             />
+            {errors.firstName && <Text>First name is required.</Text>}
             <Input
+              ref={register({ name: 'lastName' }, { required: true })}
+              onChangeText={text => setValue('lastName', text, true)}
               placeholder='Last Name'
-              value={lastName}
-              onChangeText={text => setLastName(text)}
+              keyboardType='default'
             />
+            {errors.lastName && <Text>Last name is required.</Text>}
             <Input
+              ref={register({ name: 'email' }, { required: true })}
+              onChangeText={text => setValue('email', text, true)}
               placeholder='Email'
-              value={email}
-              onChangeText={text => setEmail(text)}
+              keyboardType='email-address'
             />
+            {errors.email && <Text>Email is required.</Text>}
             <Input
+              ref={register({ name: 'password' }, { required: true })}
+              onChangeText={text => setValue('password', text, true)}
               placeholder='Password'
-              value={password}
-              onChangeText={password => setPassword(password)}
+              keyboardType='default'
+              secureTextEntry={true}
             />
+            {errors.password && <Text>Password is required.</Text>}
+            <Input
+              ref={register(
+                { name: 'confirmPassword' },
+                {
+                  required: true,
+                  validate: value => {
+                    return value === watch('password')
+                  },
+                }
+              )}
+              onChangeText={text => setValue('confirmPassword', text, true)}
+              placeholder='Confirm Password'
+              keyboardType='default'
+              secureTextEntry={true}
+            />
+            {errors.confirmPassword && (
+              <Text>Please confirm your password.</Text>
+            )}
           </View>
         </Row>
         <Row size={30}>
@@ -47,7 +78,7 @@ const SignUpScreen = ({ navigation, userSignUp }) => {
             <Button
               title='Sign Up'
               buttonStyle={styles.button}
-              onPress={userSignUp}
+              onPress={handleSubmit(onSubmit)}
             />
           </View>
         </Row>
