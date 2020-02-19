@@ -1,20 +1,17 @@
 import React, { useState } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import { AuthNavigator } from './navigators'
+import { AuthNavigator, MainNavigator } from './navigators'
 
 const Stack = createStackNavigator()
 
-const App = () => {
-  const [user, setUser] = useState({ name: 'AJ', email: 'aj@email.ca' })
-
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name='Auth' component={AuthNavigator} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  )
-}
+const App = () => (
+  <NavigationContainer>
+    <Stack.Navigator headerMode={{ title: 'none' }}>
+      <Stack.Screen name='Auth' component={AuthNavigator} />
+      <Stack.Screen name='Main' component={MainNavigator} />
+    </Stack.Navigator>
+  </NavigationContainer>
+)
 
 export default App
