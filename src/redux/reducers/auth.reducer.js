@@ -1,30 +1,39 @@
 import {
-  USER_SIGN_IN_START,
-  USER_SIGN_UP_START,
-  USER_SIGN_OUT_START,
-  USER_SIGN_IN_ERROR,
-  USER_SIGN_UP_ERROR,
-  USER_SIGN_OUT_ERROR,
-  USER_SIGN_IN_SUCCESS,
-  USER_SIGN_UP_SUCCESS,
-  USER_SIGN_OUT_SUCCESS,
+  USER_SET_AUTH_START,
+  USER_SET_AUTH_ERROR,
+  USER_SET_AUTH_SUCCESS
 } from '../actions'
 
 const initialState = {
   isLoading: false,
-  user: null,
+  error: null,
+  user: null
 }
+
 
 export const authReducer = (state = initialState, action) => {
   const { type, payload } = action
 
   switch (type) {
-    case USER_SIGN_IN_START:
-    case USER_SIGN_UP_START:
-    case USER_SIGN_OUT_START:
+    case USER_SET_AUTH_START:
       return {
         ...state,
         isLoading: true,
+        erroe: null
+      }
+    case USER_SET_AUTH_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        user: payload.user,
+        error: null
+      }
+    case USER_SET_AUTH_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        user: null,
+        error: payload.error
       }
     default:
       return state

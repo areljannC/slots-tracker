@@ -35,6 +35,7 @@ const SignInScreen = ({ navigation, userSignIn }) => {
               onChangeText={text => setValue('password', text, true)}
               placeholder='Password'
               keyboardType='default'
+              secureTextEntry={true}
             />
             {errors.password && <Text>Password is required.</Text>}
           </View>

@@ -1,59 +1,38 @@
-export const USER_SIGN_IN_START = 'USER_SIGN_IN_START'
-export const USER_SIGN_IN_ERROR = 'USER_SIGN_IN_ERROR'
-export const USER_SIGN_IN_SUCCESS = 'USER_SIGN_IN_FINISH'
-export const USER_SIGN_UP_START = 'USER_SIGN_UP_START'
-export const USER_SIGN_UP_ERROR = 'USER_SIGN_UP_ERROR'
-export const USER_SIGN_UP_SUCCESS = 'USER_SIGN_UP_FINISH'
-export const USER_SIGN_OUT_START = 'USER_SIGN_OUT_START'
-export const USER_SIGN_OUT_ERROR = 'USER_SIGN_OUT_ERROR'
-export const USER_SIGN_OUT_SUCCESS = 'USER_SIGN_OUT_FINISH'
+import { signIn, signUp, signOut } from '../../firebase'
 
-export const userSignInStart = () => ({ type: USER_SIGN_IN_START })
-export const userSignUpStart = () => ({ type: USER_SIGN_UP_START })
-export const userSignOutStart = () => ({ type: USER_SIGN_OUT_START })
+export const USER_SET_AUTH_START = 'USER_SET_AUTH_START'
+export const USER_SET_AUTH_ERROR = 'USER_SET_AUTH_ERROR'
+export const USER_SET_AUTH_SUCCESS = 'USER_SET_AUTH_SUCCESS'
 
-export const userSignInError = error => ({
-  type: USER_SIGN_IN_ERROR,
+export const userSetAuthStart = () => ({ type: USER_SET_AUTH_START })
+
+export const userSetAuthError = error => ({
+  type: USER_SET_AUTH_ERROR,
   payload: { error },
 })
-
-export const userSignUpError = error => ({
-  type: USER_SIGN_UP_ERROR,
-  payload: { error },
-})
-
-export const userSignOutError = error => ({
-  type: USER_SIGN_OUT_ERROR,
-  payload: { error },
-})
-
-export const userSignInSuccess = user => ({
-  type: USER_SIGN_IN_SUCCESS,
+export const userSetAuthSuccess = user => ({
+  type: USER_SET_AUTH_SUCCESS,
   payload: { user },
-})
-
-export const userSignUpSuccess = user => ({
-  type: USER_SIGN_UP_SUCCESS,
-  payload: { user },
-})
-
-export const userSignOutSuccess = () => ({
-  type: USER_SIGN_OUT_SUCCESS,
 })
 
 export const userSignIn = (email, password) => async dispatch => {
-  dispatch(userSignInStart())
-  console.log(email, password)
-  dispatch(userSignInSuccess())
+  await signIn(email, password)
 }
 
-export const userSignUp = (firstName, lastName, email, password) => async dispatch => {
-  dispatch(userSignUpStart())
-  console.log(firstName, lastName, email, password)
-  dispatch(userSignUpSuccess())
+export const userSignUp = (
+  firstName,
+  lastName,
+  email,
+  password
+) => async dispatch => { 
+  await signUp(email, password) 
 }
 
-export const userSignOut = () => async dispatch => {
-  dispatch(userSignOutStart())
-  dispatch(userSignOutSuccess())
+export const userSignOut = () => async dispatch => { 
+  await signOut() 
+}
+
+export const userSetAuth = user => async dispatch => {
+  dispatch(userSetAuthStart())
+  dispatch(userSetAuthSuccess(user))
 }

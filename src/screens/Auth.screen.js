@@ -1,9 +1,15 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { userSignOut } from '../redux/actions'
 import { View, StyleSheet } from 'react-native'
 import { Button } from 'react-native-elements'
 import { Grid, Row } from 'react-native-easy-grid'
 
-const AuthScreen = ({ navigation }) => {
+const mapDispatchToProps = dispatch => ({
+  userSignOut: () => dispatch(userSignOut()),
+})
+
+const AuthScreen = ({ navigation, userSignOut }) => {
   return (
     <View style={styles.container}>
       <Grid>
@@ -47,4 +53,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default AuthScreen
+export default connect(null, mapDispatchToProps)(AuthScreen)

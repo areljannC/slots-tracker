@@ -1,24 +1,21 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { connect } from 'react-redux'
+import { userSignOut } from '../redux/actions'
 import { View, StyleSheet } from 'react-native'
 import { Text, Button } from 'react-native-elements'
 
-const HomeScreen = () => {
-  const [posts, setPosts] = useState([])
+const mapStateToProps = state => ({
+  user: state.authReducer.user
+})
 
-  const fetchPosts = () => {
-    fetch('https://jsonplaceholder.typicode.com/posts/1')
-      .then(res => res.json())
-      .then(res => {
-        setPosts([...posts, res.title])
-      })
-  }
+const mapDispatchToProps = dispatch => ({
+  userSignOut: () => dispatch(userSignOut())
+})
 
+const HomeScreen = ({ user, userSignOut }) => {
   return (
     <View style={styles.container}>
-      <Button title='Fetch Data' onPress={fetchPosts} />
-      {
-        posts.map(post => <Text>{post}</Text>)
-      }
+      <Button title='Sign Out' onPress={userSignOut} />
     </View>
   )
 }
@@ -33,4 +30,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default HomeScreen
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)
