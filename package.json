@@ -21,7 +21,6 @@
     "react-hook-form": "^4.9.6",
     "react-native": "0.61.5",
     "react-native-easy-grid": "^0.2.2",
-    "react-native-elements": "^1.2.7",
     "react-native-gesture-handler": "^1.6.0",
     "react-native-reanimated": "^1.7.0",
     "react-native-safe-area-context": "^0.7.3",
