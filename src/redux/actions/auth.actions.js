@@ -1,22 +1,22 @@
-import { signIn, signUp, signOut } from '../../firebase'
+import { firebaseSignIn, firebaseSignUp, firebaseSignOut } from '../../firebase'
 
-export const USER_SET_AUTH_START = 'USER_SET_AUTH_START'
-export const USER_SET_AUTH_ERROR = 'USER_SET_AUTH_ERROR'
-export const USER_SET_AUTH_SUCCESS = 'USER_SET_AUTH_SUCCESS'
+export const SET_AUTH_START = 'SET_AUTH_START'
+export const SET_AUTH_ERROR = 'SET_AUTH_ERROR'
+export const SET_AUTH_SUCCESS = 'SET_AUTH_SUCCESS'
 
-export const userSetAuthStart = () => ({ type: USER_SET_AUTH_START })
+export const setAuthStart = () => ({ type: SET_AUTH_START })
 
-export const userSetAuthError = error => ({
-  type: USER_SET_AUTH_ERROR,
-  payload: { error },
+export const setAuthError = error => ({
+  type: SET_AUTH_ERROR,
+  payload: { error }
 })
-export const userSetAuthSuccess = user => ({
-  type: USER_SET_AUTH_SUCCESS,
-  payload: { user },
+export const setAuthSuccess = user => ({
+  type: SET_AUTH_SUCCESS,
+  payload: { user }
 })
 
 export const userSignIn = (email, password) => async dispatch => {
-  await signIn(email, password)
+  await firebaseSignIn(email, password)
 }
 
 export const userSignUp = (
@@ -24,15 +24,15 @@ export const userSignUp = (
   lastName,
   email,
   password
-) => async dispatch => { 
-  await signUp(email, password) 
+) => async dispatch => {
+  await firebaseSignUp(email, password)
 }
 
-export const userSignOut = () => async dispatch => { 
-  await signOut() 
+export const signOut = () => async dispatch => {
+  await firebaseSignOut()
 }
 
-export const userSetAuth = user => async dispatch => {
-  dispatch(userSetAuthStart())
-  dispatch(userSetAuthSuccess(user))
+export const setAuth = user => async dispatch => {
+  dispatch(setAuthStart())
+  dispatch(setAuthSuccess(user))
 }

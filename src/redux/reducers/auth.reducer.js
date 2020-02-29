@@ -1,7 +1,7 @@
 import {
-  USER_SET_AUTH_START,
-  USER_SET_AUTH_ERROR,
-  USER_SET_AUTH_SUCCESS
+  SET_AUTH_START,
+  SET_AUTH_ERROR,
+  SET_AUTH_SUCCESS
 } from '../actions'
 
 const initialState = {
@@ -10,25 +10,24 @@ const initialState = {
   user: null
 }
 
-
 export const authReducer = (state = initialState, action) => {
   const { type, payload } = action
 
   switch (type) {
-    case USER_SET_AUTH_START:
+    case SET_AUTH_START:
       return {
         ...state,
         isLoading: true,
-        erroe: null
+        error: null
       }
-    case USER_SET_AUTH_SUCCESS:
+    case SET_AUTH_SUCCESS:
       return {
         ...state,
         isLoading: false,
         user: payload.user,
         error: null
       }
-    case USER_SET_AUTH_ERROR:
+    case SET_AUTH_ERROR:
       return {
         ...state,
         isLoading: false,

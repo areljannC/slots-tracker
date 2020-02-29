@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { userSetAuth } from '../redux/actions'
+import { setAuth } from '../redux/actions'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { AuthNavigator, HomeNavigator, Mainavigator } from './'
@@ -9,16 +9,16 @@ import auth from '@react-native-firebase/auth'
 const Stack = createStackNavigator()
 
 const mapStateToProps = state => ({
-  user: state.authReducer.user,
+  user: state.authState.user,
 })
 
 const mapDispatchToProps = dispatch => ({
-  userSetAuth: user => dispatch(userSetAuth(user)),
+  setAuth: user => dispatch(setAuth(user)),
 })
 
-const MainNavigator = ({ user, userSetAuth }) => {
+const MainNavigator = ({ user, setAuth }) => {
   const onAuthStateChange = user => {
-    userSetAuth(user)
+    setAuth(user)
   }
 
   useEffect(() => {
