@@ -16,14 +16,14 @@ import { Grid, Row } from 'react-native-easy-grid'
 import { addScopeLog } from '../../redux/actions'
 
 const mapStateToProps = state => ({
-  scopeLogs: state.playState.scopeLogs
+  casino: state.playState.casino
 })
 
 const mapDispatchToProps = dispatch => ({
   addScopeLog: scopeLog => dispatch(addScopeLog(scopeLog))
 })
 
-const ScopeLoggingScreen = ({ navigation, scopeLogs, addScopeLog }) => {
+const ScopeLoggingScreen = ({ navigation, casino, addScopeLog }) => {
   const {
     register,
     unregister,
@@ -44,6 +44,7 @@ const ScopeLoggingScreen = ({ navigation, scopeLogs, addScopeLog }) => {
       payoutAmount
     } = data
     addScopeLog({
+      casino,
       slotMachine: slotMachine || '',
       betAmount: betAmount || '',
       logType: logType || '',
@@ -55,7 +56,6 @@ const ScopeLoggingScreen = ({ navigation, scopeLogs, addScopeLog }) => {
     reset({
       slotMachine: '',
       betAmount: '',
-      logType: 'Free Spins',
       freeSpinsAmount: '',
       randomFeatureTrigger: '',
       payoutAmount: ''

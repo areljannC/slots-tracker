@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { submitLogs, clearData } from '../../redux/actions'
 import {
   Container,
   View,
@@ -9,16 +10,31 @@ import {
   Item,
   Input,
   Label,
-  Picker
+  Picker,
+  Spinner
 } from 'native-base'
 import { Grid, Row } from 'react-native-easy-grid'
 
 const mapStateToProps = state => ({
+  isLoading: state.playState.isLoading,
   scopeLogs: state.playState.scopeLogs,
   playLogs: state.playState.playLogs
 })
 
-const ResultsScreen = ({ navigation, scopeLogs, playLogs}) => {
+const mapDispatchToProps = dispatch => ({
+  submitLogs: (scopeLogs, playLogs) =>
+    dispatch(submitLogs(scopeLogs, playLogs)),
+  clearData: () => dispatch(clearData())
+})
+
+const ResultsScreen = ({
+  navigation,
+  isLoading,
+  scopeLogs,
+  playLogs,
+  submitLogs,
+  clearData
+}) => {
   const getTotalWinnings = logs => {
     let total = 0
     logs.forEach(log => {
@@ -26,8 +42,6 @@ const ResultsScreen = ({ navigation, scopeLogs, playLogs}) => {
     })
     return total
   }
-  
-  console.log(JSON.stringify(scopeLogs))
 
   return (
     <Container>
@@ -47,20 +61,32 @@ const ResultsScreen = ({ navigation, scopeLogs, playLogs}) => {
             </View>
           </Row>
           <Row size={30}>
-          <View
+            <View
               style={{
                 flex: 1,
                 justifyContent: 'center',
                 alignItems: 'center'
               }}
             >
-              <Button
-                success
-                style={{ width: 150, justifyContent: 'center', marginTop: 10 }}
-                onPress={() => navigation.navigate('StartSession')}
-              >
-                <Text>Finish Session</Text>
-              </Button>
+              {isLoading ? (
+                <Spinner />
+              ) : (
+                <Button
+                  success
+                  style={{
+                    width: 150,
+                    justifyContent: 'center',
+                    marginTop: 10
+                  }}
+                  onPress={async () => {
+                    await submitLogs(scopeLogs, playLogs)
+                    clearData()
+                    navigation.navigate('StartSession')
+                  }}
+                >
+                  <Text>Finish Session</Text>
+                </Button>
+              )}
             </View>
           </Row>
         </Grid>
@@ -69,4 +95,4 @@ const ResultsScreen = ({ navigation, scopeLogs, playLogs}) => {
   )
 }
 
-export default connect(mapStateToProps)(ResultsScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(ResultsScreen)

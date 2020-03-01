@@ -1,0 +1,1 @@
+export const API_PATH = 'http://192.168.0.22:5000/slots-tracker-mobile-app/us-central1/api'

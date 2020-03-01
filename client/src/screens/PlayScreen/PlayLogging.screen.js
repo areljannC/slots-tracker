@@ -16,14 +16,14 @@ import { Grid, Row } from 'react-native-easy-grid'
 import { addPlayLog } from '../../redux/actions'
 
 const mapStateToProps = state => ({
-  playLogs: state.playState.playLogs
+  casino: state.playState.casino
 })
 
 const mapDispatchToProps = dispatch => ({
   addPlayLog: playLog => dispatch(addPlayLog(playLog))
 })
 
-const PlayLoggingScreen = ({ navigation, playLogs, addPlayLog }) => {
+const PlayLoggingScreen = ({ navigation, casino, addPlayLog }) => {
   const {
     register,
     unregister,
@@ -44,6 +44,7 @@ const PlayLoggingScreen = ({ navigation, playLogs, addPlayLog }) => {
       payoutAmount
     } = data
     addPlayLog({
+      casino,
       slotMachine: slotMachine || '',
       betAmount: betAmount || '',
       logType: logType || '',
@@ -55,7 +56,6 @@ const PlayLoggingScreen = ({ navigation, playLogs, addPlayLog }) => {
     reset({
       slotMachine: '',
       betAmount: '',
-      logType: 'Free Spins',
       freeSpinsAmount: '',
       randomFeatureTrigger: '',
       payoutAmount: ''
