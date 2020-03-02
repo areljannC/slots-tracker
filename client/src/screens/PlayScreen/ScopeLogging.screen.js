@@ -44,14 +44,14 @@ const ScopeLoggingScreen = ({ navigation, casino, addScopeLog }) => {
       payoutAmount
     } = data
     addScopeLog({
-      casino,
-      slotMachine: slotMachine || '',
-      betAmount: betAmount || '',
-      logType: logType || '',
-      freeSpinsAmount: freeSpinsAmount || '',
-      randomFeatureTrigger: randomFeatureTrigger || '',
-      payoutAmount: payoutAmount || '',
-      timeStamp: Date.now()
+      Casino: casino,
+      'Slot Machine': slotMachine || '',
+      'Bet Amount': betAmount || '',
+      'Log Type': logType || '',
+      'Free Spins': freeSpinsAmount || '',
+      'Random Feature Trigger': randomFeatureTrigger || '',
+      'Payout Amount': payoutAmount || '',
+      DateTime: Date.now()
     })
     reset({
       slotMachine: '',
