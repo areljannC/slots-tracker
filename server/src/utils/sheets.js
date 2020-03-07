@@ -1,5 +1,6 @@
 const { GoogleSpreadsheet } = require('google-spreadsheet')
 const sheetsServiceAccount = require('../../sheets-service-account.json')
+const { ErrorResponse } = require('../utils')
 
 const getSpreadsheetById = async id => {
   const spreadsheet = new GoogleSpreadsheet(id)
@@ -25,7 +26,7 @@ const addSheetRows = async (sheet, rows) => {
   await sheet.addRows(rows)
 }
 
-module.exports = {
+module.exports.sheets = {
   getSpreadsheetById,
   getSheetFromSpreadsheetByIndex,
   setSheetHeaderRow,
