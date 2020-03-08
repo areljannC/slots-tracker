@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { connect } from 'react-redux'
 import {
   Container,
@@ -34,6 +34,9 @@ const ScopeLoggingScreen = ({ navigation, casino, addScopeLog }) => {
     reset
   } = useForm()
 
+  let betAmountInputRef = useRef()
+  let payoutAmountInputRef = useRef()
+
   const onAdd = data => {
     const {
       slotMachine,
@@ -44,14 +47,14 @@ const ScopeLoggingScreen = ({ navigation, casino, addScopeLog }) => {
       payoutAmount
     } = data
     addScopeLog({
-      Casino: casino,
-      'Slot Machine': slotMachine || '',
-      'Bet Amount': betAmount || '',
-      'Log Type': logType || '',
-      'Free Spins': freeSpinsAmount || '',
-      'Random Feature Trigger': randomFeatureTrigger || '',
-      'Payout Amount': payoutAmount || '',
-      DateTime: Date.now()
+      casino: casino,
+      slotMachine: slotMachine || '',
+      betAmount: betAmount || '',
+      logType: logType || '',
+      freeSpinsAmount: freeSpinsAmount || '',
+      randomFeatureTrigger: randomFeatureTrigger || '',
+      payoutAmount: payoutAmount || '',
+      timestamp: Date.now()
     })
     reset({
       slotMachine: '',
@@ -83,6 +86,10 @@ const ScopeLoggingScreen = ({ navigation, casino, addScopeLog }) => {
                   ref={register({ name: 'slotMachine' }, { required: true })}
                   value={watch('slotMachine')}
                   onChangeText={text => setValue('slotMachine', text, true)}
+                  onSubmitEditing={() => {
+                    betAmountInputRef._root.focus()
+                  }}
+                  returnKeyType='next'
                   keyboardType='default'
                 />
               </Item>
@@ -95,7 +102,10 @@ const ScopeLoggingScreen = ({ navigation, casino, addScopeLog }) => {
                 <Input
                   placeholder='Enter bet amount...'
                   style={{ textAlign: 'center' }}
-                  ref={register({ name: 'betAmount' }, { required: true })}
+                  ref={input => {
+                    betAmountInputRef = input
+                    register({ name: 'betAmount' }, { required: true })
+                  }}
                   value={watch('betAmount')}
                   onChangeText={text => setValue('betAmount', text, true)}
                   keyboardType='number-pad'
@@ -153,6 +163,10 @@ const ScopeLoggingScreen = ({ navigation, casino, addScopeLog }) => {
                       onChangeText={text =>
                         setValue('freeSpinsAmount', text, true)
                       }
+                      onSubmitEditing={() => {
+                        payoutAmountInputRef._root.focus()
+                      }}
+                      returnKeyType='next'
                       keyboardType='number-pad'
                     />
                   </Item>
@@ -177,6 +191,10 @@ const ScopeLoggingScreen = ({ navigation, casino, addScopeLog }) => {
                       onChangeText={text =>
                         setValue('randomFeatureTrigger', text, true)
                       }
+                      onSubmitEditing={() => {
+                        payoutAmountInputRef._root.focus()
+                      }}
+                      returnKeyType='next'
                       keyboardType='default'
                     />
                   </Item>
@@ -191,7 +209,10 @@ const ScopeLoggingScreen = ({ navigation, casino, addScopeLog }) => {
                 <Input
                   placeholder='Enter payout amount...'
                   style={{ textAlign: 'center' }}
-                  ref={register({ name: 'payoutAmount' }, { required: true })}
+                  ref={input => {
+                    payoutAmountInputRef = input
+                    register({ name: 'payoutAmount' }, { required: true })
+                  }}
                   value={watch('payoutAmount')}
                   onChangeText={text => setValue('payoutAmount', text, true)}
                   keyboardType='number-pad'
