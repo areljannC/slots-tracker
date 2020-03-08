@@ -1,13 +1,19 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { userSignOut } from '../../redux/actions'
+import { signOut } from '../../redux/actions'
 import { View, StyleSheet } from 'react-native'
-import { Text } from 'native-base'
+import { Text, Button } from 'native-base'
 
-const SettingsScreen = () => {
+const mapDispatchToProps = dispatch => ({
+  signOut: () => dispatch(signOut())
+})
+
+const SettingsScreen = ({ signOut }) => {
   return (
     <View style={styles.container}>
-      <Text>Settings Screen</Text>
+      <Button onPress={signOut}>
+        <Text>Sign Out</Text>
+      </Button>
     </View>
   )
 }
@@ -18,8 +24,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center',
-  },
+    alignItems: 'center'
+  }
 })
 
-export default SettingsScreen
+export default connect(null, mapDispatchToProps)(SettingsScreen)

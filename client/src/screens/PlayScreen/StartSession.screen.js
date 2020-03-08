@@ -4,11 +4,6 @@ import {
   View,
   Text,
   Button,
-  Form,
-  Item,
-  Input,
-  Label,
-  Picker
 } from 'native-base'
 
 const StartSessionScreen = ({ navigation }) => (
