@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { connect } from 'react-redux'
 import { userSignIn } from '../../redux/actions'
 import { useForm } from 'react-hook-form'
@@ -26,9 +26,10 @@ const mapDispatchToProps = dispatch => ({
 const SignInScreen = ({ navigation, isLoading, userSignIn }) => {
   const { register, setValue, handleSubmit, errors } = useForm()
 
+  let passwordInputRef = useRef()
+
   const onSubmit = data => {
-    const { email, password } = data
-    userSignIn(email, password)
+    userSignIn(data.email, data.password)
   }
 
   if (isLoading) {
@@ -62,6 +63,10 @@ const SignInScreen = ({ navigation, isLoading, userSignIn }) => {
                   ref={register({ name: 'email' }, { required: true })}
                   onChangeText={text => setValue('email', text, true)}
                   keyboardType='email-address'
+                  onSubmitEditing={() => {
+                    passwordInputRef._root.focus()
+                  }}
+                  returnKeyType='next'
                 />
               </Item>
               <Item>{errors.email && <Label>Email is required.</Label>}</Item>
@@ -73,6 +78,9 @@ const SignInScreen = ({ navigation, isLoading, userSignIn }) => {
                   onChangeText={text => setValue('password', text, true)}
                   keyboardType='default'
                   secureTextEntry={true}
+                  ref={input => {
+                    passwordInputRef = input
+                  }}
                 />
               </Item>
               <Item>

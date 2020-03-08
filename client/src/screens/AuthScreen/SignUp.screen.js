@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { connect } from 'react-redux'
 import { userSignUp } from '../../redux/actions'
 import { useForm } from 'react-hook-form'
@@ -27,9 +27,13 @@ const mapDispatchToProps = dispatch => ({
 const SignUpScreen = ({ navigation, isLoading, userSignUp }) => {
   const { register, setValue, handleSubmit, errors, watch } = useForm()
 
+  let lastNameInputRef = useRef()
+  let emailInputRef = useRef()
+  let passwordInputRef = useRef()
+  let confirmPasswordInputRef = useRef()
+
   const onSubmit = data => {
-    const { firstName, lastName, email, password } = data
-    userSignUp(firstName, lastName, email, password)
+    userSignUp(data.firstName, data.lastName, data.email, data.password)
   }
 
   if (isLoading) {
@@ -62,6 +66,10 @@ const SignUpScreen = ({ navigation, isLoading, userSignUp }) => {
                   style={{ textAlign: 'center' }}
                   ref={register({ name: 'firstName' }, { required: true })}
                   onChangeText={text => setValue('firstName', text, true)}
+                  onSubmitEditing={() => {
+                    lastNameInputRef._root.focus()
+                  }}
+                  returnKeyType='next'
                   keyboardType='default'
                 />
               </Item>
@@ -72,8 +80,15 @@ const SignUpScreen = ({ navigation, isLoading, userSignUp }) => {
                 <Input
                   placeholder='Last Name'
                   style={{ textAlign: 'center' }}
-                  ref={register({ name: 'lastname' }, { required: true })}
+                  ref={input => {
+                    lastNameInputRef = input
+                    register({ name: 'lastname' }, { required: true })
+                  }}
                   onChangeText={text => setValue('lastname', text, true)}
+                  onSubmitEditing={() => {
+                    emailInputRef._root.focus()
+                  }}
+                  returnKeyType='next'
                   keyboardType='default'
                 />
               </Item>
@@ -84,8 +99,15 @@ const SignUpScreen = ({ navigation, isLoading, userSignUp }) => {
                 <Input
                   placeholder='Email'
                   style={{ textAlign: 'center' }}
-                  ref={register({ name: 'email' }, { required: true })}
+                  ref={input => {
+                    emailInputRef = input
+                    register({ name: 'email' }, { required: true })
+                  }}
                   onChangeText={text => setValue('email', text, true)}
+                  onSubmitEditing={() => {
+                    passwordInputRef._root.focus()
+                  }}
+                  returnKeyType='next'
                   keyboardType='email-address'
                 />
               </Item>
@@ -94,8 +116,15 @@ const SignUpScreen = ({ navigation, isLoading, userSignUp }) => {
                 <Input
                   placeholder='Password'
                   style={{ textAlign: 'center' }}
-                  ref={register({ name: 'password' }, { required: true })}
+                  ref={input => {
+                    passwordInputRef = input
+                    register({ name: 'password' }, { required: true })
+                  }}
                   onChangeText={text => setValue('password', text, true)}
+                  onSubmitEditing={() => {
+                    confirmPasswordInputRef._root.focus()
+                  }}
+                  returnKeyType='next'
                   keyboardType='default'
                   secureTextEntry={true}
                 />
@@ -107,7 +136,9 @@ const SignUpScreen = ({ navigation, isLoading, userSignUp }) => {
                 <Input
                   placeholder='Confirm Password'
                   style={{ textAlign: 'center' }}
-                  ref={register(
+                  ref={input => {
+                    confirmPasswordInputRef = input
+                    register(
                     { name: 'confirmPassword' },
                     {
                       required: true,
@@ -115,7 +146,7 @@ const SignUpScreen = ({ navigation, isLoading, userSignUp }) => {
                         return value === watch('password')
                       }
                     }
-                  )}
+                  )}}
                   onChangeText={text => setValue('confirmPassword', text, true)}
                   keyboardType='default'
                   secureTextEntry={true}
