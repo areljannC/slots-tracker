@@ -1,5 +1,5 @@
 import ky from 'ky'
-import { API_PATH } from '../../utils'
+import { API_PATH, SPREADSHEET_ID } from '../../utils'
 
 export const SET_CASINO = 'SET_CASINO'
 export const CLEAR_DATA = 'CLEAR_DATA'
@@ -43,7 +43,10 @@ export const submitLogsSuccess = () => ({
 
 export const submitLogs = (scopeLogs, playLogs) => async dispatch => {
   dispatch(submitLogsStart())
-  await ky.post(`${API_PATH}/logs`, { json: { scopeLogs, playLogs } })
+  await ky.post(`${API_PATH}/logs`, { json: { 
+    spreadsheetId: SPREADSHEET_ID,
+    scopeLogs, playLogs 
+  }})
     .then(response => dispatch(submitLogsSuccess()))
     .catch(error => dispatch(submitLogsError(error)))
 }
